@@ -5,4 +5,4 @@ jobs:
     requires:
     - ~commit
     steps:
-    - STEP_A: echo "ran STEP_A"
+    - STEP_B: echo "ran STEP_B"
