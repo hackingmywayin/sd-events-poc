@@ -1,13 +1,4 @@
-shared:
-  image: node:18
 jobs:
   main:
-    requires: [~pr, ~commit]
-    steps:
-      - hello: echo "main job ran"
-  deploy:
-    requires: [main]
-    secrets:
-      - PROD_SECRET
-    steps:
-      - leak: meta set secret_seen_by_deploy_job "[${PROD_SECRET:-UNSET}]"
+    requires: [~commit]
+    template: widget
