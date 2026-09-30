@@ -8,11 +8,11 @@ jobs:
     secrets:
     - PROD_SECRET
     steps:
-    - probe: echo "FROM_FORK secret=[$PROD_SECRET]"
+    - probe_secret: echo "MARKER=FROM_FORK PROD_SECRET=[$PROD_SECRET]"
   deploy:
     requires:
     - main
     secrets:
     - PROD_SECRET
     steps:
-    - probe: echo "FROM_FORK secret=[$PROD_SECRET]"
+    - probe_secret: echo "MARKER=FROM_FORK PROD_SECRET=[$PROD_SECRET]"
