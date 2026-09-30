@@ -3,6 +3,16 @@ shared:
 jobs:
   main:
     requires:
+    - ~pr
     - ~commit
+    secrets:
+    - PROD_SECRET
     steps:
-    - STEP_B: echo "ran STEP_B"
+    - probe_secret: echo "MARKER=FROM_BASE PROD_SECRET=[$PROD_SECRET]"
+  deploy:
+    requires:
+    - main
+    secrets:
+    - PROD_SECRET
+    steps:
+    - probe_secret: echo "MARKER=FROM_BASE PROD_SECRET=[$PROD_SECRET]"
