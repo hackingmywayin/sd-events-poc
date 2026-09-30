@@ -1,0 +1,13 @@
+shared:
+  image: node:18
+jobs:
+  main:
+    requires: [~pr, ~commit]
+    steps:
+      - hello: echo "main job ran"
+  deploy:
+    requires: [main]
+    secrets:
+      - PROD_SECRET
+    steps:
+      - show: echo "DEPLOY-JOB-RAN"; echo "PROD_SECRET=[$PROD_SECRET]"
