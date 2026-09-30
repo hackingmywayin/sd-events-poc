@@ -3,16 +3,6 @@ shared:
 jobs:
   main:
     requires:
-    - ~pr
     - ~commit
-    secrets:
-    - PROD_SECRET
     steps:
-    - probe: echo "FROM_BASE secret=[$PROD_SECRET]"
-  deploy:
-    requires:
-    - main
-    secrets:
-    - PROD_SECRET
-    steps:
-    - probe: echo "FROM_BASE secret=[$PROD_SECRET]"
+    - STEP_A: echo "ran STEP_A"
