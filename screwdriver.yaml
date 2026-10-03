@@ -1,18 +1,4 @@
-shared:
-  image: node:18
 jobs:
   main:
-    requires:
-    - ~pr
-    - ~commit
-    secrets:
-    - PROD_SECRET
-    steps:
-    - probe_secret: echo "MARKER=FROM_BASE PROD_SECRET=[$PROD_SECRET]"
-  deploy:
-    requires:
-    - main
-    secrets:
-    - PROD_SECRET
-    steps:
-    - probe_secret: echo "MARKER=FROM_BASE PROD_SECRET=[$PROD_SECRET]"
+    requires: [~commit]
+    template: widget
