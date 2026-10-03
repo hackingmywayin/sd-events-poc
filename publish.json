@@ -1,0 +1,1 @@
+{"yaml": "name: widget\nversion: '1.0'\ndescription: the victim's own default-namespace template\nmaintainer: victim@example.com\nconfig:\n  image: node:18\n  steps:\n    - whoami: echo \"I-AM-THE-VICTIMS-OWN-DEFAULT-TEMPLATE\"\n"}
