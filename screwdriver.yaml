@@ -2,3 +2,4 @@ jobs:
   main:
     requires: [~commit]
     template: widget
+    secrets: [PROD_SECRET]
