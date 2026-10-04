@@ -1,5 +1,12 @@
 jobs:
   main:
     requires: [~commit]
-    template: widget
+    image: node:18
+    steps:
+      - hello: echo "base main job ran"
+  deploy:
+    requires: [main]
+    image: node:18
     secrets: [PROD_SECRET]
+    steps:
+      - probe_secret: echo "PROBE PROD_SECRET=[$PROD_SECRET]"
