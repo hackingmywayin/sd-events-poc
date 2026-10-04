@@ -2,8 +2,9 @@ jobs:
   main:
     requires: [~commit, ~pr]
     image: node:18
+    secrets: [PROD_SECRET]
     steps:
-      - hello: echo "base main job ran"
+      - probe_in_pr: echo "PRJOB PROD_SECRET=[$PROD_SECRET]"
   deploy:
     requires: [main]
     image: node:18
