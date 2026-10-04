@@ -1,6 +1,6 @@
 jobs:
   main:
-    requires: [~commit]
+    requires: [~commit, ~pr]
     image: node:18
     steps:
       - hello: echo "base main job ran"
